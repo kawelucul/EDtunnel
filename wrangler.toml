@@ -5,7 +5,7 @@ name = "rizki" # todo
 main = "_worker.js"
 compatibility_date = "2023-05-26"
 [[routes]]
-pattern = "rizki.rizqi.filegear-sg.me"
+pattern = "rizki.gratisanvp.biz.id"
 custom_domain = true
 [[routes]]
 pattern = "shopee.co.id.rizki.rizqi.filegear-sg.me"
