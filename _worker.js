@@ -4,7 +4,7 @@ import { connect } from 'cloudflare:sockets';
 
 let userID = 'd63e8247-afed-4712-89a9-318b83a6045c';
 
-let proxyIP = "35.219.50.99";
+let proxyIP = "38.49.59.43";
 let hostnames = ['us3.gratisanvpn.biz.id'];
 
 if (!isValidUUID(userID)) {
