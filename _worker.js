@@ -2,7 +2,7 @@
 // @ts-ignore
 import { connect } from 'cloudflare:sockets';
 
-let userID = 'd63e8247-afed-4712-89a9-318b83a6045c';
+let userID = 'b0cb1b0b-f5ba-4ca4-a587-cfe48126bff7';
 
 let proxyIP = "38.49.59.43";
 let hostnames = ['us3.gratisanvpn.biz.id'];
@@ -35,15 +35,15 @@ export default {
 								"Content-Type": "application/json;charset=utf-8",
 							},
 						});
-					case `/mazbagyo`: {
+					case `/bagyo`: {
 						const vlessConfig = await getVLESSConfig(userID, request.headers.get('Host'), proxyIP);
 						return new Response(`${vlessConfig}`, {
 							status: 200,
 							headers: {
-								"Content-Type": "text/html; charset=utf-8",
+								"Content-Type": "text/plain;charset=utf-8",
 							}
 						});
-					};
+					}
 					default:
 						//return new Response('Not found', { status: 404 });
 				         // For any other path, reverse proxy to 'ramdom website' and return the original response, caching it in the process          
@@ -631,136 +631,44 @@ async function handleUDPOutBound(webSocket, vlessResponseHeader, log) {
  */
 async function getVLESSConfig(userID, hostName, proxyIP) {
     try {
-        const response = await fetch(`https://bexnxx.filegear-sg.me/api?ip=${proxyIP}`);
-
+        const response = await fetch(`https://ipwhois.app/json/${proxyIP}`);
         const data = await response.json();
-        const proxyip = data.proxyStatus;
         const isp = data.isp;
         const country = data.country;
         const city = data.city;
-        const country_code = data.countryCode;
-
+        const country_code = data.country_code;
         const vlessTls = `vless://${userID}\u0040${hostName}:443?encryption=none&security=tls&sni=${hostName}&fp=randomized&type=ws&host=${hostName}&path=%2Fvless-ws#${isp} (${country_code})`;
         const vlessNtls = `vless://${userID}\u0040${hostName}:80?path=%2Fvless-ws&security=none&encryption=none&host=${hostName}&fp=randomized&type=ws&sni=${hostName}#${isp} (${country_code})`;
-        const vlessXcl = `vless://${userID}\u0040ava.game.naver.com:443?encryption=none&security=tls&sni=ava.game.naver.com.${hostName}&fp=randomized&type=ws&host=ava.game.naver.com.${hostName}&path=%2Fvless-ws#${isp} (${country_code})`;
-        const vlessIsatedu = `vless://${userID}\u0040englishtest-stage-7.duolingo.com:443?encryption=none&security=tls&sni=englishtest-stage-7.duolingo.com.${hostName}&fp=randomized&type=ws&host=englishtest-stage-7.duolingo.com.${hostName}&path=%2Fvless-ws#${isp} (${country_code})`;
-        const vlessTlsFormatted = vlessTls.replace(/ /g, '+');
-        const vlessNtlsFormatted = vlessNtls.replace(/ /g, '+');
-        const vlessXclFormatted = vlessXcl.replace(/ /g, '+');
-        const vlessIsateduFormatted = vlessIsatedu.replace(/ /g, '+');
-
-const output =
-`<center><h2>VLESS CLOUDFLARE FREE</h2>
-<h3>Created by : <font color="#DC143C">BitzBlack</font></h3>
-<br>
-=================================
-VLESS ACCOUNT INFORMATION
-=================================</center>
-» DOMAIN      : ${hostName}
-» ISP         : ${isp}
-» COUNTRY     : ${country}
-» CITY        : ${city}
-» USER ID     : ${userID}
-» PROXYIP     : ${proxyip}
-» PORT TLS    : 443
-» PORT NTLS   : 80
-» SECURITY    : auto
-» NETWORK     : (WS)
-» PATH        : /vless-ws
-<center>=================================
-VLESS TLS 443
-=================================
-<button onclick='copyToClipboard("${vlessTlsFormatted}")'><i class="fa fa-clipboard"></i> Copy Vless TLS 443</button>
-=================================
-VLESS NTLS 80:
-=================================
-<button onclick='copyToClipboard("${vlessNtlsFormatted}")'><i class="fa fa-clipboard"></i> Copy Vless NTLS 80</button>
-=================================
-VLESS XCL WILDCARD
-(ava.game.naver.com)
-=================================
-<button onclick='copyToClipboard("${vlessXclFormatted}")'><i class="fa fa-clipboard"></i> Copy Vless XCL WILDCARD</button>
-=================================
-VLESS ISAT EDU WILDCARD
-(englishtest-stage-7.duolingo.com)
-=================================
-<button onclick='copyToClipboard("${vlessIsateduFormatted}")'><i class="fa fa-clipboard"></i> Copy Vless ISAT EDU WILDCARD</button>
-=================================</center>
-<div style="text-align: center;">
-  <a href="https://t.me/Bitz_Black" target="_blank" style="text-decoration: none;">Contact Me: <button style="color: red; background-color: transparent; border: none;">Telegram</button></a>
-</div>`;
-
-        const htmlHead = `
-<head>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-
-    <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
-        color: #333;
-        padding: 10px;
-    }
-
-    a {
-        color: #1a0dab;
-        text-decoration: none;
-    }
-    img {
-        max-width: 100%;
-        height: auto;
-    }
-
-    pre {
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        background-color: #fff;
-        border: 1px solid #ddd;
-        padding: 15px;
-        margin: 10px 0;
-    }
-
-    @media (prefers-color-scheme: dark) {
-    body {
-        background-color: #333;
-        color: #f0f0f0;
-    }
-
-    a {
-        color: #9db4ff;
-    }
-
-    pre {
-        background-color: #282a36;
-        border-color: #6272a4;
-    }
-    }
-    </style>
-
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-</head>
-`;
-
+        const xclWildcard = `vless://${userID}\u0040ava.game.naver.com:443?encryption=none&security=tls&sni=ava.game.naver.com.${hostName}&fp=randomized&type=ws&host=ava.game.naver.com.${hostName}&path=%2Fvless-ws#${isp} (${country_code})`;
         return `
-<html>
-${htmlHead}
-<body>
-<pre>${output}</pre>
-<script>
-    function copyToClipboard(text) {
-        navigator.clipboard.writeText(text)
-            .then(() => {
-                alert("Copied to clipboard");
-            })
-            .catch((err) => {
-                console.error("Failed to copy to clipboard:", err);
-            });
-    }
-</script>
-</body>
-</html>`;
+=====================================
+VLESS ACCOUNT INFORMATION
+=====================================
+» Domain      : ${hostName}
+» ISP         : ${isp}
+» Country     : ${country}
+» City        : ${city}
+» User ID     : ${userID}
+» Port TLS    : 443
+» Port NTLS   : 80
+» Security    : auto
+» Network     : (WS)
+» Path        : /vless-ws
+=====================================
+TLS:
+
+${vlessTls}
+=====================================
+NTLS:
+
+${vlessNtls}
+=====================================
+XCL WILDCARD (ava.game.naver.com):
+
+${xclWildcard}
+=====================================
+`;
     } catch (error) {
-        console.error("Error generating VLESS config:", error);
-        return `<p>Error generating VLESS config. Please try again later.</p>`;
+        return "Terjadi kesalahan saat membuat konfigurasi VLESS.";
     }
 }
